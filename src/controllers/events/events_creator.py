@@ -1,12 +1,12 @@
 from src.model.repositories.interfaces.eventos_repository import EventosRepositoryInterface
 from src.http_types.http_request import HttpRequest
-from src.http_types.http_response import HttpReponse
+from src.http_types.http_response import HttpResponse
 
 class EventsCreator:
     def __init__(self, events_repo: EventosRepositoryInterface):
         self.__events_repo = events_repo
 
-    def create(self, http_request: HttpRequest) -> HttpReponse:
+    def create(self, http_request: HttpRequest) -> HttpResponse:
         events_info = http_request.body["data"]
         event_name = events_info["name"]
 
@@ -21,8 +21,8 @@ class EventsCreator:
     def __insert_event(self, event_name: str) -> None:
         self.__events_repo.insert(event_name)
 
-    def __format_response(self, event_name: str) -> HttpReponse:
-        return HttpReponse(
+    def __format_response(self, event_name: str) -> HttpResponse:
+        return HttpResponse(
             body={
                 "data": {
                     "Type": "Event",

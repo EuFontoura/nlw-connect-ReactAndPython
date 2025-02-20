@@ -1,12 +1,12 @@
 from src.model.repositories.interfaces.subscribers_repository import SubscribersRepositoryInterface
 from src.http_types.http_request import HttpRequest
-from src.http_types.http_response import HttpReponse
+from src.http_types.http_response import HttpResponse
 
 class SubscribersCreator:
     def __init__(self, subs_repo: SubscribersRepositoryInterface):
         self.__subs_repo = subs_repo
 
-    def create(self, http_request: HttpRequest) -> HttpReponse:
+    def create(self, http_request: HttpRequest) -> HttpResponse:
         subscriber_info = http_request.body["data"]
         subscriber_email = subscriber_info["email"]
         evento_id = subscriber_info["evento_id"]
@@ -22,8 +22,8 @@ class SubscribersCreator:
     def __insert_sub(self, subscriber_info: dict) -> None:
         self.__subs_repo.insert(subscriber_info)
 
-    def __format_response(self, subscriber_info: dict) -> HttpReponse:
-        return HttpReponse(
+    def __format_response(self, subscriber_info: dict) -> HttpResponse:
+        return HttpResponse(
             body={
                 "data": {
                     "Type": "Subscriber",
